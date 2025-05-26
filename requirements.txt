@@ -1,0 +1,14 @@
+tensorflow
+tensorflow-hub
+tensorflow-object-detection-api
+matplotlib
+numpy
+pillow
+scipy
+tqdm
+pycocotools
+torch>=2.0.0
+torchvision>=0.15.0
+opencv-python
+scikit-image
+scikit-learn

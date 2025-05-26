@@ -1,0 +1,47 @@
+# Virtual environment
+venv/
+.venv/
+env/
+.env/
+
+# IDE files
+.vscode/
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+
+# Model files (too large for GitHub)
+solar_panel_defect_model/
+*.h5
+*.pb
+*.ckpt
+*.weights
+
+# Dataset files (too large for GitHub)
+*.zip
+*.tar.gz
+Solar Panel Fault Dataset*/
+dataset/
+data/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
