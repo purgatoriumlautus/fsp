@@ -79,7 +79,7 @@ class SolarPanelDataset(tf.data.Dataset):
                 
                 # Create grid targets
                 grid_size = 7
-                cell_size = 224 / grid_size
+                cell_size = 224.0 / grid_size  # Changed to 224.0 for float division
                 grid_targets = tf.zeros((grid_size, grid_size, 5 + num_classes))
                 
                 for i in range(tf.shape(bbox_scaled)[0]):
@@ -87,7 +87,7 @@ class SolarPanelDataset(tf.data.Dataset):
                     box_center_x = (x_min + x_max) / 2
                     box_center_y = (y_min + y_max) / 2
                     box_width = x_max - x_min
-                    box_height = y_max - y_min
+                    box_height = y_max - y_min 
                     
                     # Calculate grid cell
                     grid_x = tf.cast(box_center_x // cell_size, tf.int32)
@@ -97,9 +97,9 @@ class SolarPanelDataset(tf.data.Dataset):
                     grid_x = tf.minimum(grid_x, grid_size - 1)
                     grid_y = tf.minimum(grid_y, grid_size - 1)
                     
-                    # Relative to grid cell
-                    cell_x = (box_center_x - grid_x * cell_size) / cell_size
-                    cell_y = (box_center_y - grid_y * cell_size) / cell_size
+                    # Relative to grid cell - cast grid coordinates to float32
+                    cell_x = (box_center_x - tf.cast(grid_x, tf.float32) * cell_size) / cell_size
+                    cell_y = (box_center_y - tf.cast(grid_y, tf.float32) * cell_size) / cell_size
                     cell_w = box_width / 224.0
                     cell_h = box_height / 224.0
                     
@@ -110,7 +110,7 @@ class SolarPanelDataset(tf.data.Dataset):
                     
                     # Update grid cell
                     box_info = tf.concat([[1.0, cell_x, cell_y, cell_w, cell_h], one_hot], axis=0)
-                    indices = tf.constant([[grid_y, grid_x]], dtype=tf.int32)
+                    indices = tf.stack([[grid_y, grid_x]])  # Changed from tf.constant
                     grid_targets = tf.tensor_scatter_nd_update(
                         grid_targets,
                         indices,
